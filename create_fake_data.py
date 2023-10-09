@@ -5,7 +5,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 # Paramètres
-NB_SPRINTS = 100  # Nombre de sprints à générer
+NB_SPRINTS = 1000  # Nombre de sprints à générer
 MAX_JOURS = 15  # Maximum de jours par personne par sprint
 NB_PERSONNES = 4  # Nombre de personnes dans l'équipe
 np.random.seed(0)  # pour la reproductibilité aléatoire
