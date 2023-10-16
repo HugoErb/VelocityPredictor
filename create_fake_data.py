@@ -22,9 +22,9 @@ velocite_reelle = jours_homme_dispo * variation_aleatoire
 df = pd.DataFrame({"jours_homme_dispo": jours_homme_dispo, "velocite_reelle": velocite_reelle})
 
 # Vérification des données générées
-# print(df.head())
-# sns.scatterplot(df, x=jours_homme_dispo, y=velocite_reelle)
-# plt.show()
+print(df.head())
+sns.scatterplot(df, x=jours_homme_dispo, y=velocite_reelle)
+plt.show()
 
 # Création du fichier parquet
 con = duckdb.connect(database=':memory:', read_only=False)

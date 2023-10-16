@@ -3,6 +3,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import PolynomialFeatures
+from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -14,24 +15,31 @@ query = "SELECT * FROM my_table"
 df = conn.execute(query).fetch_df()
 # print(df)
 
+# Instanciation du scaler
+scaler = MinMaxScaler()
+
 # Décomposition train/test
 X = df[['jours_homme_dispo']]
 y = df['velocite_reelle']
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=42)
 
+# Normalisation des ensembles
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
 # Transformation des données pour la régression polynomiale
-poly = PolynomialFeatures(degree=2)
-X_train_poly = poly.fit_transform(X_train)
-X_test_poly = poly.transform(X_test)
+poly = PolynomialFeatures(degree=4, include_bias=False)
+X_train_poly = poly.fit_transform(X_train_scaled)
+X_test_poly = poly.transform(X_test_scaled)
 
 # Entraînement avec regréssion linéaire
 linear_model = LinearRegression()
 linear_model_poly = LinearRegression()
-linear_model.fit(X_train, y_train)
+linear_model.fit(X_train_scaled, y_train)
 linear_model_poly.fit(X_train_poly, y_train)
 
 # Prédictions
-test_linear_predictions = linear_model.predict(X_test)
+test_linear_predictions = linear_model.predict(X_test_scaled)
 test_poly_predictions = linear_model_poly.predict(X_test_poly)
 
 # Calcul des erreurs
