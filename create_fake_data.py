@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 NB_SPRINTS = 1000  # Nombre de sprints à générer
 MAX_JOURS = 15  # Maximum de jours par personne par sprint
 NB_PERSONNES = 4  # Nombre de personnes dans l'équipe
-MULTIPLICATEUR_VELOCITE = 2  # Facteur multiplicatif pour simuler la vélocité
+MULTIPLICATEUR_VELOCITE = 1.1  # Combien de story-point fait une personne par jour
 np.random.seed(0)  # pour la reproductibilité aléatoire
 
 
@@ -24,7 +24,7 @@ def generate_data(nb_sprints, max_jours, nb_personnes, multiplicateur_velocite):
     :return: DataFrame avec les colonnes 'jours_homme_dispo' et 'velocite_reelle'.
     """
     jours_homme_dispo = np.random.randint(nb_personnes, nb_personnes * max_jours + 1, nb_sprints)
-    variation_aleatoire = np.random.uniform(0.85, 1.15, nb_sprints)
+    variation_aleatoire = np.random.uniform(0.80, 1.20, nb_sprints)
     velocite_reelle = jours_homme_dispo * multiplicateur_velocite * variation_aleatoire
     return pd.DataFrame({"jours_homme_dispo": jours_homme_dispo, "velocite_reelle": velocite_reelle})
 
